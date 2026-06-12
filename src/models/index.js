@@ -1,6 +1,17 @@
 const sequelize = require('../config/db');
 const Empresa = require('./empresa.model');
 const Usuario = require('./usuario.model');
+const Empleado = require('./empleado.model');
+
+Empresa.hasMany(Empleado, {
+  foreignKey: 'empresaId',
+  as: 'empleados'
+});
+
+Empleado.belongsTo(Empresa, {
+  foreignKey: 'empresaId',
+  as: 'empresa'
+});
 
 const connectAndSync = async () => {
   try {
@@ -13,4 +24,4 @@ const connectAndSync = async () => {
   }
 };
 
-module.exports = { sequelize, Empresa, Usuario, connectAndSync };
+module.exports = { sequelize, Empresa, Usuario, Empleado, connectAndSync };
