@@ -20,4 +20,16 @@ const getEmpleadosByEmpresa = async (req, res) => {
   }
 };
 
-module.exports = { createEmpleado, getEmpleadosByEmpresa };
+const deleteEmpleado = async (req, res) => {
+  try {
+    const empleado = await Empleado.findByPk(req.params.id);
+    if (!empleado) return res.status(404).json({ error: 'Empleado no encontrado' });
+    
+    await empleado.destroy();
+    res.json({ message: 'Empleado eliminado' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { createEmpleado, getEmpleadosByEmpresa, deleteEmpleado };
